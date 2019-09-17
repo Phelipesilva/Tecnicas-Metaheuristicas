@@ -1,0 +1,49 @@
+* {
+    font-family: Helvetica, sans-serif;
+    color: #546e7a;
+}
+input{
+    margin: 5px;
+}
+.app {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+#items {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    flex-direction: column;
+}
+.center {
+    margin: 5px;
+    display: flex;
+    align-items: center;
+    align-self: center;
+}
+#mochila_info {
+    display: flex;
+    flex-direction: column;
+}
+
+input {
+    margin: 5px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+button {
+    margin: 5px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+a {
+    color: #1e88e5;
+}

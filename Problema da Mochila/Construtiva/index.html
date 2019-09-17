@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Problema da Mochila</title>
+    <script src="problema_da_mochila.js"></script>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="app">
+        <h1>Problema da Mochila</h1>
+        <h2>Heurística Construtiva</h2>
+        <form class="center" id='mochila_form'>
+            Mochila
+            <input type="number" name="capacidade" id="capacidade" placeholder="Capacidade">
+            <button type="menu" onclick="criarMochila()">Criar Mochila</button>
+        </form>
+        <div class="center" id="mochila_info"><h3>Mochila não criada</h3></div>
+        <button class="center" onclick="preencherMochila()">Preencher Mochila</button>
+        <form class="center" id='items_form'>
+            <div id="items">
+            </div>
+        </form>
+        <button class="center" onclick="adicionarItem()">Adicionar Item</button>
+    </div>
+
+    <script>
+
+        var mochila = null;
+        var items = [];
+        
+        const $items = document.getElementById('items');
+        const $mochila_info = document.getElementById('mochila_info');
+
+        document.getElementById('items_form').addEventListener('submit', e => e.preventDefault());
+        document.getElementById('mochila_form').addEventListener('submit', e => e.preventDefault());
+
+        function criarMochila() {
+            const capacidade = document.getElementById('capacidade').value;
+            mochila = new Mochila(capacidade);
+            $mochila_info.innerHTML = '<h3>Capacidade da Mochila: ' + mochila.capacidade + '</h3>';
+        }
+
+        function adicionarItem() {
+            
+            $div = document.createElement('div');
+            
+            $peso = document.createElement('input');
+            $peso.setAttribute('type', 'number');
+            $peso.setAttribute('required', true);
+            $peso.setAttribute('min', 0);
+            $peso.setAttribute('name', 'peso');
+            $peso.setAttribute('Placeholder', 'Peso');
+
+            $beneficio = document.createElement('input');
+            $beneficio.setAttribute('type', 'number');
+            $beneficio.setAttribute('required', true);
+            $beneficio.setAttribute('min', 0);
+            $beneficio.setAttribute('name', 'beneficio');
+            $beneficio.setAttribute('Placeholder', 'Benefício');
+
+            $div.appendChild($peso);
+            $div.appendChild($beneficio);
+
+            $items.appendChild($div);
+        }
+
+        function getItems() {
+            const $divs = $items.getElementsByTagName('div');
+            items = [];
+            for(let i = 0; i < $divs.length; i++) {
+                const peso = $divs[i].firstElementChild.value;
+                const beneficio = $divs[i].lastElementChild.value;
+                items.push( new Item(i+1, peso, beneficio) );
+            }
+
+            return items;
+        }
+
+        function preencherMochila() {
+            
+            if(!mochila) {
+                alert('Mochila não foi criada!');
+            }
+
+            getItems();
+            mochila.inserirItems(items);
+
+            let info = `
+                <h3>Capacidade da Mochila: ${mochila.capacidade}</h3>
+                <strong>Items adicionados a mochila:</strong>
+                <ul>
+            `
+            
+            mochila.items.forEach(item => (
+                info += `<li>(${item.id}º) Peso: ${item.peso}, Beneficio: ${item.beneficio}</li>`
+            ));
+
+            info += `</ul>`
+
+            $mochila_info.innerHTML = info;
+
+            return (false)
+        }
+
+    </script>
+</body>
+</html>
